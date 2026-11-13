@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>String Operations</title>
+  </head>
+  <body>
+    <h2>String Operations</h2>
+    Enter a String : <input type="text" id="str"><br><br>
+    <button onclick = "reverse()">Reverse String</button>
+    <button onclick ="replace()">Replace Charater</button>
+    <button onclick ="palindrome()">Check Palindrome</button>
+    <p id="result"></p>
+    <script>
+      function reverse(){
+        let s = document.getElementById("str").value;
+        let rev = s.split("").reverse().join("");
+        document.getElementById("result").innerHTML="Revesed String : " + rev;
+      }
+      function replace(){
+        let s = document.getElementById("str").value;
+        let oldChar = prompt("Enter the Charater to Replace :");
+        let newChar = prompt("Enter the new Charater");
+        let result = s.replaceAll(oldChar,newChar);
+        document.getElementById("result").innerHTML = "Replace Charater : "+ result;
+      }
+      function palindrome(){
+        let s = document.getElementById("str").value;
+        let rev = s.split("").reverse().join("");
+        if(s.toLowerCase()==rev.toLowerCase()){
+          document.getElementById("result").innerHTML = "String is Palindrome";
+        } else {
+          document.getElementById("result").innerHTML = "String is not a Palindrome";
+        }
+      }
+    </script>
+  </body>
+</html>
