@@ -1,0 +1,229 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Information Form</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            font-weight: bold;
+            margin: 50px;
+            background: radial-gradient(circle, white 0%, #1aff00 100%);
+        }
+
+        .container {
+            box-sizing: border-box;
+            width: 50%;
+            margin: auto;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+        }
+
+        label {
+            display: block;
+            margin-top: 10px;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        select {
+            box-sizing: border-box;
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+        }
+
+        input[type="submit"], button {
+            margin-top: 20px;
+            padding: 10px;
+            width: 100%;
+            background-color: #4caf50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        input[type="submit"]:hover,
+        button:hover {
+            background-color: #45a049;
+        }
+
+        .error-message {
+            color: red;
+            margin-top: 10px;
+        }
+
+        @media (max-width: 700px) {
+            body {
+                margin: 20px;
+            }
+
+            .container {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h3>Name: Shubham Katkade</h3>
+        <h3>Roll No: 42418</h3>
+        <h1>Student Information Form</h1>
+
+        <form id="studentForm" onsubmit="return validateForm()">
+
+            <label for="name">Name:</label>
+            <input type="text" id="name"
+                   placeholder="Enter your name" required>
+
+            <label for="address">Address:</label>
+            <input type="text" id="address"
+                   placeholder="Enter your address" required>
+
+            <label for="city">City:</label>
+            <input type="text" id="city"
+                   placeholder="Enter your city" required>
+
+            <label for="state">State:</label>
+            <input type="text" id="state"
+                   placeholder="Enter your state" required>
+
+            <label for="pincode">Pin Code:</label>
+            <input type="text" id="pincode"
+                   placeholder="Enter your Pin Code" required>
+
+            <label for="gender">Gender:</label>
+            <select id="gender" required>
+                <option value="">Select</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+                <option value="Other">Other</option>
+            </select>
+
+            <label for="mobile">Mobile Number:</label>
+            <input type="text" id="mobile"
+                   placeholder="Enter your mobile number" required>
+
+            <label for="email">Email ID:</label>
+            <input type="email" id="email"
+                   placeholder="Enter your email" required>
+
+            <div id="errorMessage" class="error-message"></div>
+
+            <input type="submit" value="Submit">
+        </form>
+    </div>
+
+    <script>
+        function validateForm() {
+            const name = document.getElementById("name").value.trim();
+            const address = document.getElementById("address").value.trim();
+            const city = document.getElementById("city").value.trim();
+            const state = document.getElementById("state").value.trim();
+            const pincode = document.getElementById("pincode").value.trim();
+            const gender = document.getElementById("gender").value;
+            const mobile = document.getElementById("mobile").value.trim();
+            const email = document.getElementById("email").value.trim();
+
+            const errorMessage = document.getElementById("errorMessage");
+            errorMessage.textContent = "";
+
+            const namePattern = /^[a-zA-Z\s]+$/;
+            if (!namePattern.test(name)) {
+                errorMessage.textContent =
+                    "Please enter a valid name (letters and spaces only).";
+                return false;
+            }
+
+            const cityStatePattern = /^[a-zA-Z\s]+$/;
+            if (!cityStatePattern.test(city)) {
+                errorMessage.textContent = "Please enter a valid city name.";
+                return false;
+            }
+
+            if (!cityStatePattern.test(state)) {
+                errorMessage.textContent = "Please enter a valid state name.";
+                return false;
+            }
+
+            const pinCodePattern = /^[0-9]{6}$/;
+            if (!pinCodePattern.test(pincode)) {
+                errorMessage.textContent =
+                    "Please enter a valid 6-digit Pin Code.";
+                return false;
+            }
+
+            const mobilePattern = /^[6-9][0-9]{9}$/;
+            if (!mobilePattern.test(mobile)) {
+                errorMessage.textContent =
+                    "Enter a valid 10-digit mobile number starting with 6, 7, 8, or 9.";
+                return false;
+            }
+
+            const emailPattern =
+                /^[a-zA-Z0-9._%+-]+@(gmail|yahoo|hotmail)\.com$/;
+
+            if (!emailPattern.test(email)) {
+                errorMessage.textContent =
+                    "Use an email ending in gmail.com, yahoo.com, or hotmail.com.";
+                return false;
+            }
+
+            showWelcomePage({
+                name, address, city, state, pincode, gender, mobile, email
+            });
+
+            return false;
+        }
+
+        function showWelcomePage(student) {
+            const container = document.querySelector(".container");
+
+            container.replaceChildren();
+
+            const heading = document.createElement("h1");
+            heading.textContent = "Congratulations!";
+
+            const subheading = document.createElement("h2");
+            subheading.textContent = "Student Information Submitted Successfully";
+
+            container.append(heading, subheading);
+
+            const details = [
+                ["Name", student.name],
+                ["Address", student.address],
+                ["City", student.city],
+                ["State", student.state],
+                ["Pin Code", student.pincode],
+                ["Gender", student.gender],
+                ["Mobile Number", student.mobile],
+                ["Email ID", student.email]
+            ];
+
+            details.forEach(function(item) {
+                const paragraph = document.createElement("p");
+                const label = document.createElement("strong");
+
+                label.textContent = item[0] + ": ";
+                paragraph.append(label, document.createTextNode(item[1]));
+                container.appendChild(paragraph);
+            });
+
+            const button = document.createElement("button");
+            button.textContent = "Go Back to Home Page";
+            button.onclick = goBack;
+            container.appendChild(button);
+        }
+
+        function goBack() {
+            location.reload();
+        }
+    </script>
+</body>
+</html>
