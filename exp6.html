@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Array Operations</title>
+</head>
+<body>
+
+    <h2>Array Operations</h2>
+
+    Enter the array:
+    <input type="text" id="arr" placeholder="1,2,3,4,5">
+    <button onclick="create()">Submit</button>
+
+    <p id="result"></p>
+
+    Enter element to be removed from array:
+    <input type="number" id="removeNum">
+    <button onclick="remove()">Remove</button>
+
+    <p id="result1"></p>
+
+    Enter value to be checked in array:
+    <input type="number" id="checkNum">
+    <button onclick="check()">Check</button>
+
+    <p id="result2"></p>
+
+    <button onclick="empty()">Empty</button>
+
+    <p id="result3"></p>
+
+    <script>
+
+        let a = [];
+
+        // Create Array
+        function create()
+        {
+            let str = document.getElementById("arr").value;
+
+            a = str.split(",").map(Number);
+
+            document.getElementById("result").innerHTML =
+            "Array: " + a + "<br>Length: " + a.length;
+        }
+
+        // Remove Element
+        function remove()
+        {
+            let n = Number(document.getElementById("removeNum").value);
+
+            let i = a.indexOf(n);
+
+            if(i != -1)
+            {
+                a.splice(i, 1);
+            }
+
+            document.getElementById("result1").innerHTML =
+            "Array: " + a + "<br>Length: " + a.length;
+        }
+
+        // Check Element
+        function check()
+        {
+            let n = Number(document.getElementById("checkNum").value);
+
+            if(a.includes(n))
+            {
+                document.getElementById("result2").innerHTML =
+                n + " is present in the array";
+            }
+            else
+            {
+                document.getElementById("result2").innerHTML =
+                n + " is not present in the array";
+            }
+        }
+
+        // Empty Array
+        function empty()
+        {
+            a.length = 0;
+
+            document.getElementById("result3").innerHTML =
+            "Array: " + a + "<br>Length: " + a.length;
+        }
+
+    </script>
+
+</body>
+</html>
