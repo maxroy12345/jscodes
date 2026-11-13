@@ -1,0 +1,274 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Exp.7 Append Object in the Array</title>
+  </head>
+
+  <body>
+    <center>
+      <h1>Exp.7 Append Object in the Array</h1>
+      <hr />
+
+      <!-- ARRAY SECTION -->
+      <h3>Length</h3>
+
+      <input
+        type="number"
+        id="length"
+        placeholder="Enter the length of the array"
+      />
+
+      <h3>Array Elements</h3>
+
+      <input
+        type="text"
+        id="element"
+        placeholder="Enter the array element value"
+      />
+
+      <br /><br />
+
+      <button onclick="addElement()">Add_Elements</button>
+
+      <p>
+        Array Elements =
+        <span id="arrayDisplay">[]</span>
+      </p>
+
+      <!-- CURRENT ARRAY COUNT -->
+      <p>
+        Current Array Length =
+        <span id="currentLength">0</span>
+      </p>
+
+      <hr />
+
+      <!-- OBJECT SECTION -->
+      <h3>Create an object</h3>
+
+      <input type="text" id="key" placeholder="Enter the key" />
+
+      <input type="text" id="value" placeholder="Enter the value of key" />
+
+      <h3>Object elements</h3>
+
+      <button onclick="showObject()">Show_Object</button>
+
+      <p>
+        Object elements =
+        <span id="objectDisplay">{}</span>
+      </p>
+
+      <hr />
+
+      <!-- ADD OBJECT TO ARRAY -->
+      <h3>Add Object in Array</h3>
+
+      <button onclick="addObject()">Add_Data</button>
+
+      <p>
+        Array elements =
+        <span id="objectArrayDisplay">[]</span>
+      </p>
+
+      <!-- CURRENT COUNT AFTER ADDING OBJECT -->
+      <p>
+        Current Array Length =
+        <span id="currentLengthObject">0</span>
+      </p>
+
+      <hr />
+
+      <!-- DATATYPE SECTION -->
+      <h3>Array Elements Datatypes</h3>
+
+      <button onclick="findDataType()">Find_Ele_Datatype</button>
+
+      <br /><br />
+
+      <table border="2" cellpadding="12" id="dataTable">
+        <tr>
+          <th>ELEMENT_NO</th>
+          <th>ELEMENT VALUE</th>
+          <th>DATATYPE</th>
+          <th>ISARRAY()</th>
+          <th>TYPE OF()</th>
+        </tr>
+      </table>
+
+      <br />
+
+      <!-- CURRENT ARRAY COUNT -->
+      <p>
+        Current Number of Elements =
+        <span id="currentCount">0</span>
+      </p>
+    </center>
+
+    <script>
+      // Array
+let arr = [];
+
+// Object
+let obj = {};
+
+// ---------------- UPDATE CURRENT COUNT ----------------
+function updateCurrentCount() {
+  document.getElementById("currentLength").innerHTML = arr.length;
+
+  document.getElementById("currentLengthObject").innerHTML = arr.length;
+
+  document.getElementById("currentCount").innerHTML = arr.length;
+}
+
+// ---------------- TYPE OF FUNCTION ----------------
+function typeOf(value) {
+  return typeof value;
+}
+
+// ---------------- ADD ARRAY ELEMENT ----------------
+function addElement() {
+  let length = document.getElementById("length").value;
+  let element = document.getElementById("element").value;
+
+  if (length == "") {
+    alert("Enter array length");
+    return;
+  }
+
+  if (element == "") {
+    alert("Enter an array element");
+    return;
+  }
+
+  if (arr.length >= Number(length)) {
+    alert("Array length limit reached!");
+    return;
+  }
+
+  let value;
+
+  // Number
+  if (!isNaN(element) && element.trim() !== "") {
+    value = Number(element);
+  }
+
+  // Boolean
+  else if (element === "true") {
+    value = true;
+  } else if (element === "false") {
+    value = false;
+  }
+
+  // Array
+  else if (element.startsWith("[") && element.endsWith("]")) {
+    try {
+      value = JSON.parse(element);
+    } catch {
+      alert("Invalid array format");
+      return;
+    }
+  }
+
+  // Object
+  else if (element.startsWith("{") && element.endsWith("}")) {
+    try {
+      value = JSON.parse(element);
+    } catch {
+      alert("Invalid object format");
+      return;
+    }
+  }
+
+  // String
+  else {
+    value = element;
+  }
+
+  // Add element to array
+  arr.push(value);
+
+  // Display array
+  document.getElementById("arrayDisplay").innerHTML = JSON.stringify(arr);
+
+  // Update current count
+  updateCurrentCount();
+
+  // Clear input
+  document.getElementById("element").value = "";
+}
+
+// ---------------- CREATE OBJECT ----------------
+function showObject() {
+  let key = document.getElementById("key").value;
+  let value = document.getElementById("value").value;
+
+  if (key == "" || value == "") {
+    alert("Enter key and value");
+    return;
+  }
+
+  // Add key-value pair
+  obj[key] = value;
+
+  // Display object
+  document.getElementById("objectDisplay").innerHTML = JSON.stringify(obj);
+
+  // Clear inputs
+  document.getElementById("key").value = "";
+  document.getElementById("value").value = "";
+}
+
+// ---------------- ADD OBJECT TO ARRAY ----------------
+function addObject() {
+  // Add object to array
+  arr.push(obj);
+
+  // Display array
+  document.getElementById("arrayDisplay").innerHTML = JSON.stringify(arr);
+
+  // Display object array
+  document.getElementById("objectArrayDisplay").innerHTML = JSON.stringify(arr);
+
+  // Update current count
+  updateCurrentCount();
+}
+
+// ---------------- FIND DATATYPE ----------------
+function findDataType() {
+  let table = document.getElementById("dataTable");
+
+  // Remove previous rows
+  while (table.rows.length > 1) {
+    table.deleteRow(1);
+  }
+
+  // Display every array element
+  for (let i = 0; i < arr.length; i++) {
+    let row = table.insertRow();
+
+    // Element number
+    row.insertCell(0).innerHTML = i + 1;
+
+    // Element value
+    row.insertCell(1).innerHTML = JSON.stringify(arr[i]);
+
+    // Datatype
+    row.insertCell(2).innerHTML = typeof arr[i];
+
+    // Is Array
+    row.insertCell(3).innerHTML = Array.isArray(arr[i]);
+
+    // Type Of
+    row.insertCell(4).innerHTML = typeOf(arr[i]);
+  }
+
+  // Update current count
+  updateCurrentCount();
+}
+
+// ---------------- INITIAL COUNT ----------------
+updateCurrentCount();
+    </script>
+  </body>
+</html>
