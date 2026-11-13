@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Area Calculator</title>
+</head>
+<body>
+
+    <h2>Area Calculator</h2>
+
+    <h3>1. Area of Triangle (Heron's Formula)</h3>
+    Enter Side A: <input type="number" id="a"><br><br>
+    Enter Side B: <input type="number" id="b"><br><br>
+    Enter Side C: <input type="number" id="c"><br><br>
+
+    <button onclick="triangle()">Calculate Triangle Area</button>
+    <p id="tresult"></p>
+
+    <hr>
+
+    <h3>2. Area of Rectangle</h3>
+    Enter Length: <input type="number" id="l"><br><br>
+    Enter Breadth: <input type="number" id="w"><br><br>
+
+    <button onclick="rectangle()">Calculate Rectangle Area</button>
+    <p id="rresult"></p>
+
+    <hr>
+
+    <h3>3. Area of Circle</h3>
+    Enter Radius: <input type="number" id="r"><br><br>
+
+    <button onclick="circle()">Calculate Circle Area</button>
+    <p id="cresult"></p>
+
+    <script>
+
+        // Area of Triangle using Heron's Formula
+        function triangle()
+        {
+            let a = Number(document.getElementById("a").value);
+            let b = Number(document.getElementById("b").value);
+            let c = Number(document.getElementById("c").value);
+
+            let s = (a + b + c) / 2;
+
+            if (a <= 0 || b <= 0 || c <= 0 ||
+                a + b <= c || a + c <= b || b + c <= a)
+            {
+                document.getElementById("tresult").innerHTML =
+                "Invalid triangle sides!";
+                return;
+            }
+
+            let area = Math.sqrt(s * (s-a) * (s-b) * (s-c));
+
+            document.getElementById("tresult").innerHTML =
+            "Area of Triangle = " + area.toFixed(2);
+        }
+
+        // Area of Rectangle
+        function rectangle()
+        {
+            let l = Number(document.getElementById("l").value);
+            let w = Number(document.getElementById("w").value);
+
+            let area = l * w;
+
+            document.getElementById("rresult").innerHTML =
+            "Area of Rectangle = " + area;
+        }
+
+        // Area of Circle
+        function circle()
+        {
+            let r = Number(document.getElementById("r").value);
+
+            let area = Math.PI * r * r;
+
+            document.getElementById("cresult").innerHTML =
+            "Area of Circle = " + area.toFixed(2);
+        }
+
+    </script>
+
+</body>
+</html>
