@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Multiplication Table</title>
+</head>
+<body>
+
+    <h2>Multiplication Table</h2>
+
+    Enter Number:
+    <input type="number" id="num"><br><br>
+
+    Enter Limit:
+    <input type="number" id="limit"><br><br>
+
+    <button onclick="table()">Generate Table</button>
+
+    <p id="result"></p>
+
+    <script>
+
+        function table()
+        {
+            let n = Number(document.getElementById("num").value);
+            let limit = Number(document.getElementById("limit").value);
+
+            let output = "";
+
+            for(let i = 1; i <= limit; i++)
+            {
+                output += n + " x " + i + " = " + (n * i) + "<br>";
+            }
+
+            document.getElementById("result").innerHTML = output;
+        }
+
+    </script>
+
+</body>
+</html>
