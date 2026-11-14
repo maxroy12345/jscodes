@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>String Comparison</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 18px;
+        }
+
+        input {
+            padding: 8px;
+            margin: 5px;
+        }
+
+        button {
+            padding: 8px 12px;
+            margin: 5px;
+        }
+
+        p {
+            color: blue;
+            white-space: pre-line;
+        }
+
+        .hint {
+            color: #555;
+            font-size: 14px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h2>String Comparison</h2>
+
+    <p class="hint">
+        Type <b>5</b> for a number, or <b>"5"</b> (with quotes) for a string.
+    </p>
+
+    <label>First Value:</label>
+    <input type="text" id="str1" placeholder='e.g. 5 or "5"'>
+    <br>
+
+    <label>Second Value:</label>
+    <input type="text" id="str2" placeholder='e.g. 5 or "5"'>
+    <br><br>
+
+    <button onclick="checkEquality()">Check Equality</button>
+    <button onclick="compareLength()">Compare Length</button>
+
+    <h3>Equality Result</h3>
+    <p id="equalityResult"></p>
+
+    <h3>Length Result</h3>
+    <p id="lengthResult"></p>
+
+    <script>
+        // Quoted value -> string, unquoted numeric value -> number, anything else -> string
+        function parseInput(raw) {
+            raw = raw.trim();
+            if (/^(["']).*\1$/.test(raw)) return raw.slice(1, -1);   // "5" -> string
+            if (raw !== "" && !isNaN(raw)) return Number(raw);       // 5   -> number
+            return raw;                                              // abc -> string
+        }
+
+        function checkEquality() {
+            var v1 = parseInput(document.getElementById("str1").value);
+            var v2 = parseInput(document.getElementById("str2").value);
+
+            document.getElementById("equalityResult").textContent =
+                "First value:  " + JSON.stringify(v1) + " (" + typeof v1 + ")\n" +
+                "Second value: " + JSON.stringify(v2) + " (" + typeof v2 + ")\n\n" +
+                "== (loose):  " + (v1 == v2) + "\n" +
+                "=== (strict): " + (v1 === v2);
+        }
+
+        function compareLength() {
+            var str1 = document.getElementById("str1").value;
+            var str2 = document.getElementById("str2").value;
+            var message;
+
+            if (str1.length > str2.length) {
+                message = "First string is longer.";
+            } else if (str1.length < str2.length) {
+                message = "Second string is longer.";
+            } else {
+                message = "Both strings have the same length.";
+            }
+
+            document.getElementById("lengthResult").textContent =
+                message + "\n" +
+                "Length of First String = " + str1.length + "\n" +
+                "Length of Second String = " + str2.length;
+        }
+    </script>
+
+</body>
+
+</html>
